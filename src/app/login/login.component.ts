@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ROLES } from '../constants/roles.constants';
 
 @Component({
   selector: 'app-login',
@@ -48,10 +49,11 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('access_token', response.access_token);
             // Navigate to the dashboard after successful login
             this.userRole = this.authService.getUserRole();
+            console.log('this.userRole :', this.userRole);
 
-            if (this.userRole === 'user') {
+            if (this.userRole === ROLES.User) {
               this.router.navigate(['/user']);
-            } else if (this.userRole === 'admin') {
+            } else if (this.userRole === ROLES.Admin|| this.userRole === ROLES.SuperAdmin) {
               this.router.navigate(['/admin'])
             }
           } else {

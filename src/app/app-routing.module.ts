@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ROLES } from './constants/roles.constants';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +17,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [RoleGuard],
-    data: { role: 'admin' },
+    data: { role: [ROLES.Admin, ROLES.SuperAdmin]},
   },
   {
     path: 'user',

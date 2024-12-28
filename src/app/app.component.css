@@ -1,0 +1,29 @@
+/* Flexbox for Navbar */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure space between logo and other navbar items */
+}
+
+/* Prevent logo from shrinking */
+.navbar-icon {
+    width: auto;    /* Allow logo to keep its aspect ratio */
+    height: 70px;   /* Fixed height to maintain consistency across all screen sizes */
+    margin-right: 10px;
+    border-radius: 50%;   /* Optional: makes the image circular if it's a square */
+    flex-shrink: 0;   /* Prevent the logo from shrinking */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar .container-fluid {
+        justify-content: flex-start; /* Align navbar items to the left on mobile */
+    }
+
+    /* Adjust logo size on small screens */
+    .navbar-icon {
+        width: 70px;  /* Set a fixed width on mobile devices */
+        height: auto;  /* Keep the aspect ratio intact */
+        margin-right: 10px;  /* Space between the icon and text */
+    }
+}

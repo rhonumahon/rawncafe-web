@@ -1,32 +1,37 @@
-<!-- src/app/components/login/login.component.html -->
-<mat-card class="auth-card">
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    
-    <mat-card-content>
-      <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username" required />
-          <mat-error *ngIf="loginForm?.get('username')?.hasError('required')">
-            Username is required
-          </mat-error>
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" required />
-          <mat-error *ngIf="loginForm?.get('password')?.hasError('required')">
-            Password is required
-          </mat-error>
-        </mat-form-field>
-  
-        <div class="actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm?.invalid">Login</button>
-          <button mat-button (click)="navigateToRegister()">Register</button>
+<div class="container">
+  <div class="login-card">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username or Email</label>
+        <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter your username or email">
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="text-danger">
+          <small *ngIf="loginForm.get('username')?.errors?.['required']">Username or Email is required.</small>
+          <small *ngIf="loginForm.get('username')?.errors?.['email']">Please enter a valid email.</small>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter your password">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="loginForm.invalid">Login</button>
+        <!-- <a href="#" class="small">Forgot password?</a> -->
+      </div>
+
+      <div class="mt-3 text-center">
+        <span>Don't have an account? </span>
+        <a routerLink="/register" class="small">Register here</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+
