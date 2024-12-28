@@ -1,0 +1,32 @@
+<!-- src/app/components/login/login.component.html -->
+<mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required />
+          <mat-error *ngIf="loginForm?.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required />
+          <mat-error *ngIf="loginForm?.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+  
+        <div class="actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm?.invalid">Login</button>
+          <button mat-button (click)="navigateToRegister()">Register</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  
