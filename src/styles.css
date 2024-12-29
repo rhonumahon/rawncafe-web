@@ -1,4 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%; /* Ensure that both html and body take the full height of the viewport */
+  margin: 0; /* Remove default margin */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  background-image: url('/assets/images/rawn-background3.jpg'); /* Background image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensure the background stays fixed during scroll */
+  background-position: left top 72px; /* Ensure the left portion of the image is shown */
+  min-height: 100%; /* Ensure the body takes the full height */
+  padding: 0;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  body {
+    background-position: left top 60px; /* Keep the left side of the background image on mobile */
+  }
+}

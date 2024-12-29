@@ -8,7 +8,7 @@
 /* Prevent logo from shrinking */
 .navbar-icon {
     width: auto;    /* Allow logo to keep its aspect ratio */
-    height: 70px;   /* Fixed height to maintain consistency across all screen sizes */
+    height: 40px;   /* Fixed height to maintain consistency across all screen sizes */
     margin-right: 10px;
     border-radius: 50%;   /* Optional: makes the image circular if it's a square */
     flex-shrink: 0;   /* Prevent the logo from shrinking */
@@ -27,3 +27,4 @@
         margin-right: 10px;  /* Space between the icon and text */
     }
 }
+
