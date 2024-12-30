@@ -9,10 +9,11 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ROLES } from './constants/roles.constants';
+import { UnAuthGuard } from './guards/unauth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
   {
     path: 'admin',
     component: AdminComponent,
@@ -23,7 +24,7 @@ const routes: Routes = [
     path: 'user',
     component: UserComponent,
     canActivate: [RoleGuard],
-    data: { role: 'user' },
+    data: { role: [ROLES.User] },
   },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 

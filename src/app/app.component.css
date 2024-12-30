@@ -1,4 +1,5 @@
 /* Flexbox for Navbar */
+
 .navbar .container-fluid {
     display: flex;
     align-items: center;
@@ -27,4 +28,6 @@
         margin-right: 10px;  /* Space between the icon and text */
     }
 }
+
+
 

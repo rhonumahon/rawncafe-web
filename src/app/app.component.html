@@ -20,7 +20,7 @@
           </li>
         </ul>
         <form class="d-flex">
-          <button *ngIf="isAuthenticated" (click)="logout()" class="btn btn-outline-primary" type="submit">Logout</button>
+          <a *ngIf="isAuthenticated" (click)="logout()" class="nav-link" href="#">Logout</a>
         </form>
       </div>
     </div>
