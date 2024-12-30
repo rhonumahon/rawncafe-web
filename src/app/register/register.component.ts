@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
         username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
-        // confirmPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
       },
       { validators: passwordMatchValidator }  // Apply the custom validator for password matching
     );
