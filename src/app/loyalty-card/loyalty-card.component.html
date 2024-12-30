@@ -1,1 +1,26 @@
-<p>loyalty-card works!</p>
+<div class="card-container">
+    <div class="loyalty-card">
+      <!-- Card Header -->
+      <div class="card-header">
+        <h2>{{ user?.name ?? '' }}'s Loyalty Card</h2>
+      </div>
+  
+      <!-- Card Type Badge (Platinum/Silver) -->
+      <div class="card-type">{{ user?.card_type ?? 'silver' }}</div>
+  
+      <!-- Logos -->
+      <div class="item-collection">
+        <div *ngFor="let logo of logos; let i = index" class="item">
+          <img [src]="logo === 'credit-logo' ? 'assets/images/rawncafelogo.png' : 'assets/images/LogoRawn.png'" alt="logo">
+        </div>
+      </div>
+  
+      <!-- Reward Description -->
+      <div class="reward-description">
+        <h3>Reward Status</h3>
+        <p>{{ rewardDescription }}</p>
+        <button *ngIf="canRedeem" (click)="redeemReward()" class="redeem-btn">Redeem Reward</button>
+      </div>
+    </div>
+  </div>
+  

@@ -10,16 +10,22 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit{
   title = 'rawncafe-web';
   isAuthenticated: boolean = false;
+  isLoading: boolean = false;
+  authId: string | null =''
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    const authId = this.authService.getUserId();
-    this.isAuthenticated = authId ? true : false
+    this.authId = this.authService.getUserId();
+    this.isAuthenticated = this.authId ? true : false
   }
 
   logout() {
-    this.authService.logout()
-    this.router.navigate(['/login']);
+    this.isLoading = true
+    setTimeout(() => {
+      this.authService.logout();
+      this.isLoading = false
+      this.router.navigate(['/login']);
+    }, 3000)
   }
 }

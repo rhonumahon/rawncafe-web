@@ -40,25 +40,27 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       const { username, password } = this.loginForm.value;
   
-      this.authService.login(username, password).subscribe(
-        (response) => {
-          this.isLoading = false;
-          if (response && response.access_token) {
-            // Store the access token in localStorage
-            localStorage.setItem('access_token', response.access_token);
-            // Navigate to the dashboard after successful login
-            this.userRole = this.authService.getUserRole();
-            console.log('this.userRole :', this.userRole);
-            this.router.navigate(['/dashboard']);
-          } else {
-            this.errorMessage = 'No access token returned from the server';
+      setTimeout(() => {
+        this.authService.login(username, password).subscribe(
+          (response) => {
+            this.isLoading = false;
+            if (response && response.access_token) {
+              // Store the access token in localStorage
+              localStorage.setItem('access_token', response.access_token);
+              // Navigate to the dashboard after successful login
+              this.userRole = this.authService.getUserRole();
+              console.log('this.userRole :', this.userRole);
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.errorMessage = 'No access token returned from the server';
+            }
+          },
+          (error) => {
+            this.isLoading = false;
+            this.errorMessage = 'Invalid credentials or server error';
           }
-        },
-        (error) => {
-          this.isLoading = false;
-          this.errorMessage = 'Invalid credentials or server error';
-        }
-      );
+        );
+      }, 3000 )
     }
   
 

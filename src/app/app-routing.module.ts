@@ -31,8 +31,8 @@ const routes: Routes = [
     data: { role: [ROLES.User, ROLES.Admin, ROLES.SuperAdmin] },
   },
   {
-    path: 'loyalty-card',
-    component: LoyaltyCardComponent,
+    path: 'loyalty-card/:user_id',
+    loadChildren: () => import('./loyalty-card/loyalty-card.module').then(m => m.LoyaltyCardModule),
     canActivate: [RoleGuard, AuthGuard],
     data: { role: [ROLES.User, ROLES.Admin, ROLES.SuperAdmin] },
   },
