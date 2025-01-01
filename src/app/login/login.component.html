@@ -21,6 +21,9 @@
         <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
           <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
         </div>
+        <div *ngIf="errorMessage" class="text-danger">
+          <small>{{errorMessage}}</small>
+        </div>
       </div>
 
       <div class="d-flex justify-content-between align-items-center">

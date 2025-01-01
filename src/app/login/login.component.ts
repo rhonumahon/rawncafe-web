@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         this.authService.login(username, password).subscribe(
           (response) => {
+          console.log('response :', response);
             this.isLoading = false;
             if (response && response.access_token) {
               // Store the access token in localStorage
@@ -51,11 +52,13 @@ export class LoginComponent implements OnInit {
               this.userRole = this.authService.getUserRole();
               console.log('this.userRole :', this.userRole);
               this.router.navigate(['/dashboard']);
-            } else {
-              this.errorMessage = 'No access token returned from the server';
+            } else if (response && response.error) {
+              this.errorMessage = response.error;
             }
           },
           (error) => {
+          console.log('error :', error);
+
             this.isLoading = false;
             this.errorMessage = 'Invalid credentials or server error';
           }
