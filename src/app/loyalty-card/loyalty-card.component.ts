@@ -1,99 +1,212 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { ROLES } from '../constants/roles.constants';
+import { ILogos } from './loyalty-card.model';
+import { Subscription } from 'rxjs';
+import { LoyaltyCardService } from '../services/loyalty-card.service';
 
 @Component({
   selector: 'app-loyalty-card',
   templateUrl: './loyalty-card.component.html',
   styleUrls: ['./loyalty-card.component.css']
 })
-export class LoyaltyCardComponent implements OnInit {
+export class LoyaltyCardComponent implements OnInit, OnDestroy {
+  isLoading = false;
+  adminButtonRole: any[] = [ROLES.Admin, ROLES.SuperAdmin]
+  userRole: ROLES | null = ROLES.User;
   userId: string | null = ''; // User ID to fetch data for the loyalty card
+  rewards: any[] = [];
+  isRedeeming: boolean = false; // State to track API call status
+  isGrantingPoints: boolean = false;
+  rewardTitle: string = ''
   user: any; // Holds the user data
-  logos: string[] = []; // Array to store the logos for each point earned
-  rewardDescription: string = ''; // Reward description text
+  logos: ILogos[] = []; // Array to store the logos for each point earned
   canRedeem: boolean = false; // Whether the user can redeem a reward
-  redeemableRewards: string[] = []; // List of rewards user can redeem based on points
+  redeemableRewards: string[] = []; // List of rewards user can redeem based on 
+  rewardMessage: string = ''
+  isModalVisible: boolean = false; // Tracks modal visibility
+  redeemButton: string = 'Redeem Now'
+selectedReward: {id: string, description: string, title: string} = {id: '', description: '',  title: ''}; // Tracks the reward details
+private routeSub: Subscription | null = null;
   
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private loyaltyCardService: LoyaltyCardService, private route: ActivatedRoute, private router: Router) { 
+
+  }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
-    if(this.userId) {
-      this.getUserData(this.userId)
-    }
-  }
-
-  // Method to fetch user data from API
-  getUserData(userId: string): void {
-    this.http.get(`http://localhost:3000/users/${userId}`).subscribe(
-      (data: any) => {
-        this.user = data;
-        this.updateCardData();
-      },
-      error => {
-        console.error('Error fetching user data:', error);
+    this.userRole = this.authService.getUserRole();
+    const currentUserId = this.authService.getUserId()
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      this.userId = params.get('user_id');
+      if(this.userRole === ROLES.User && this.userId !== currentUserId) {
+        this.router.navigate(['/loyalty-card', currentUserId])
       }
-    );
+      if(this.userId) {
+        this.getUserData(this.userId ?? currentUserId)
+      }
+    });
   }
 
-  // Method to update the loyalty card data
-  updateCardData(): void {
-    const points = this.user.points;
+// Method to fetch user data from API
+getUserData(userId: string): void {
+  this.isLoading = true; // Set loading to true when starting the API call
 
-    // Update logos based on points
-    this.logos = this.generateLogos(points);
-    console.log('logos :', this.logos);
-
-    // Set the reward description and redemption button logic based on points
-    if (points >= 1 && points < 5) {
-      this.rewardDescription = 'You have unlocked a reward! Keep going for more!';
-      this.canRedeem = false;
-    } else if (points >= 5 && points < 10) {
-      this.rewardDescription = 'You can redeem a small reward!';
-      this.canRedeem = true;
-      this.redeemableRewards = ['Small Reward'];
-    } else if (points >= 10) {
-      this.rewardDescription = 'You can redeem a big reward!';
-      this.canRedeem = true;
-      this.redeemableRewards = ['Big Reward'];
-    } else {
-      this.rewardDescription = 'Start earning points to unlock rewards!';
-      this.canRedeem = false;
+  this.loyaltyCardService.getUserDetails(userId).subscribe(
+    (data: any) => {
+      this.user = data;
+      this.getRewards(data);
+      this.isLoading = false; // Set loading to false once the API call is successful
+    },
+    error => {
+      console.error('Error fetching user data:', error);
+      this.isLoading = false; // Set loading to false in case of an error as well
     }
-  }
+  );
+}
+
 
   // Generate logos based on points
-  generateLogos(points: number): string[] {
+  generateLogos(points: number, rewards: any[]): ILogos[] {
+  console.log('points :', points);
     let logos = [];
     for (let i = 1; i <= 10; i++) {
-      logos.push(i <= points ? 'credit-logo' : 'default-logo');
+      const reward = rewards.find(r => r.required_points === i); // Find the reward matching the current point
+            if (i <= points) {
+        logos.push(reward ? {id: reward._id, points, description: reward.reward_description, title: `${reward.reward_name}`} : {id: '', points, description: '', title: 'credit-logo'});
+      } else {
+        logos.push(reward ? {id: reward._id, points, description: reward.reward_description, title: `${reward.reward_name}`} : {id: '', points, description: '', title: 'default-logo'});
+      }
     }
     return logos;
   }
 
-  // Method to redeem the reward
-  redeemReward(): void {
-    if (this.canRedeem && this.redeemableRewards.length > 0) {
-      alert(`You redeemed: ${this.redeemableRewards[0]}`);
-      this.updateRewardStatus(); // Update reward status after redemption
+  redeemReward(reward_id: string): void {
+    if (!reward_id || this.isRedeeming) {
+      return;
     }
+  
+    this.isRedeeming = true;
+    this.isLoading = true;
+    console.log('reward_id :', reward_id);
+  
+    this.loyaltyCardService.addRewardToUser(this.userId!, reward_id)
+      .subscribe({
+        next: (response) => {
+          console.log('Reward redeemed successfully:', response);
+          alert('Reward redeemed successfully!');
+          
+        },
+        error: (err) => {
+          console.error('Error redeeming reward:', err);
+          alert('There was an error redeeming the reward. Please try again.');
+        },
+        complete: () => {
+          this.isRedeeming = false;
+          this.isLoading = false;
+          window.location.reload();
+        }
+      });
+  }
+  
+
+// Method to update the rewards after redemption
+getRewards(data: any): void {
+  const points = this.user.points;
+  
+  this.loyaltyCardService.getAllRewards().subscribe(
+    (response) => {
+      this.rewards = response;
+      console.log('User rewards updated:', this.rewards);
+      this.logos = this.generateLogos(points, this.rewards);
+    },
+    (error) => {
+      console.error('Error fetching rewards:', error);
+    }
+  );
+}
+
+// Show the modal with reward details
+showRewardDetails(reward: {id: string, description: string, title: string}, _points: number): void {
+  const points = _points + 1
+  this.selectedReward = reward;
+  this.isModalVisible = true;
+  const data = this.user;
+  const role = this.authService.getUserRole()
+  if(reward && points <= data.points && !data.redeem_requests.includes(reward.id) && !data.rewards.includes(reward.id)) {
+    if (role === ROLES.User) {
+      this.canRedeem = true
+      this.redeemButton = 'Redeem Reward'
+      this.rewardTitle =  'Congratulations!'
+      this.rewardMessage = 'You may now redeem your reward.'
+      //allow user to click the claim button, send api request, reload the page
+    }
+  } else if (reward && data.redeem_requests.includes(reward.id) && !data.rewards.includes(reward.id)) {
+    //shoot message claim your rewards at Rawn Cafe Waltermart Batangas
+    if(role === ROLES.Admin || role === ROLES.SuperAdmin) {
+      this.canRedeem = true
+      this.redeemButton = 'Grant Reward'
+      this.rewardTitle =  'Claim Request!'
+      this.rewardMessage = ''
+      //allow button to confirm claimed reward, send api , reload page, 
+    } else {
+      this.canRedeem = false
+      this.rewardTitle =  'Request Sent!'
+      this.rewardMessage = 'Your reward is now available for redemption at our physical store.'
+    }
+  } else if (reward && !data.redeem_requests.includes(reward.id) && data.rewards.includes(reward.id)) {
+    this.canRedeem = false
+    this.rewardTitle =  'Reward Claimed!'
+    this.rewardMessage = 'Your reward has already been claimed!'
+  }
+}
+
+// Close the modal
+closeModal(): void {
+this.clearProperties();
+}
+
+clearProperties(): void {
+  this.isModalVisible = false;
+  this.selectedReward = {id: '', description: '', title: ''};
+  this.redeemButton = ''
+  this.rewardTitle =  ''
+  this.rewardMessage = ''
+  this.canRedeem = false
+}
+
+grantPoints(): void {
+  if (this.userRole === ROLES.User || !this.userId || this.isGrantingPoints) {
+    return; // Prevent multiple calls
   }
 
-  // Method to update the rewards after redemption
-  updateRewardStatus(): void {
-    const updatedRewards = [...this.user.rewards, this.redeemableRewards[0]];
-    this.user.rewards = updatedRewards;
-    this.user.points -= 10; // Deduct points after redeeming
-    this.http.put(`http://localhost:3000/users/${this.userId}`, this.user).subscribe(
-      (updatedUser) => {
-        console.log('User data updated:', updatedUser);
-        this.updateCardData(); // Recalculate the data after redeeming
+  this.isGrantingPoints = true; // Set flag to true
+  this.isLoading = true;
+
+  this.loyaltyCardService.addPoints(this.userId!)
+    .subscribe({
+      next: (response) => {
+        console.log('Points granted successfully:', response);
+        alert('Points granted successfully!');
       },
-      error => {
-        console.error('Error updating user data:', error);
+      error: (err) => {
+        console.error('Error granting points:', err);
+        alert('There was an error granting points. Please try again.');
+      },
+      complete: () => {
+        this.isGrantingPoints = false;
+        this.isLoading = false;
+        window.location.reload();
       }
-    );
+    });
+}
+
+ngOnDestroy(): void {
+  if (this.routeSub) {
+    this.routeSub.unsubscribe(); // Unsubscribe to avoid memory leaks
   }
+}
+
+
 }

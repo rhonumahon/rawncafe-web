@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
+import { ROLES } from '../constants/roles.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
-  getUserRole(): string | null {
+  getUserRole(): ROLES | null {
     const token = this.getToken();
     if (token) {
       try {

@@ -1,145 +1,317 @@
-/* Styling for the Loyalty Card */
+/* Card container to allow items to stack vertically */
+.card-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* .loyalty-card styles remain the same */
 .loyalty-card {
-    background: linear-gradient(135deg, #2f4b6e, #4e7c91); /* Gradient colors */
-    border-radius: 20px;
-    width: 400px;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    outline: 2px solid #70a9d0; /* Soft outline color */
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-image: url('/assets/images/cardbackground.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  width: 600px;
+  height: 400px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  outline: 2px solid white;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateY(-50px);
+  margin-bottom: 20px; /* Space between the card and button */
+}
+
+
+/* Card Header Styling */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  background-color: #0a2a3d;
+  padding: 20px;
+  height: 30%;
+  margin: 0;
+  color: white;
+  position: relative;
+}
+
+/* Top Row: Logo and Loyalty Card text */
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 0px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-top: -10px;
+}
+
+.logo {
+  position: relative;
+  transform: translate(-25px, -25px);
+  height: 50px;
+  width: auto;
+}
+
+.logo-text {
+  position: relative;
+  transform: translate(-50px, -28px);
+  height: 80px;
+  width: auto;
+}
+
+.header-title {
+  transform: translate(-50px, -23px);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  flex-grow: 1;
+  margin-top: -5px;
+}
+
+.card-info {
+  transform: translate(0px, -45px);
+  text-align: left;
+  font-size: 14px;
+  color: white;
+  margin-top: 10px;
+}
+
+.card-info p {
+  margin: 0;
+  padding: 2px 0;
+}
+
+.card-type {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #d8d8d8;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 15px;
+  font-size: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transform: translate(20px, -20px);
+}
+
+/* Item Collection (Grid Layout) */
+.item-collection {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* Parent Item Container */
+.item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Styling */
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, transform 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.item img:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Reward Logo Text */
+.reward-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #0a2a3d;
+  z-index: 2;
+  text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Reward Description Section */
+.reward-description {
+  text-align: left;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e0f7fa;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  width:100%;
+  margin: 20px auto;
+} 
+
+.loyalty-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 5px 0; /* Optional: add space around the button */
+}
+
+/* Styling for the button */
+.loyalty-btn {
+  width: 150px; /* Adjust width as needed */
+  font-size: 16px;
+  background-color: rgb(28, 132, 28);
+  color: white;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+
+.redeem-btn:hover {
+  background-color: #7d9eb1;
+}
+
+/* Modal Background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show Modal */
+.modal.show {
+  display: flex;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button */
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .card-container {
+    justify-content: center;
+    align-items: flex-start; /* Align items at the top */
+  }
+
+  .loyalty-card {
+    width: 95%; /* Adjust width to fit within smaller screens */
+    height: auto; /* Allow height to adjust dynamically */
+    transform: translateY(30px); /* Reset translate for mobile */
   }
   
-  /* Card Header Styling */
-  .card-header {
-    width: 100%;
-    background-color: #3e5f73; /* Dark background for the header */
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin: 0; /* Remove margins */
-  }
-  
-  /* Card Header Title */
-  .card-header h2 {
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-  
-  /* Card Details */
-  .card-details {
-    font-size: 14px;
-    color: #fff;
-    margin-top: 10px;
-  }
-  
-  .card-details p {
-    margin: 5px 0;
-  }
-  
-  /* Card Type (Platinum Badge) */
-  .card-type {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #d8d8d8; /* Light background for the card type */
-    color: #333;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Item Collection (Grid Layout) */
-  .item-collection {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    margin-top: 25px;
-  }
-  
-  /* Image Styling */
-  .item img {
-    width: 100%;
-    height: 55px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: opacity 0.3s ease, transform 0.3s ease-in-out;
-  }
-  
-  .item img:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-  
-  /* Reward Description Section */
-  .reward-description {
-    text-align: center;
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e0f7fa; /* Light background for reward description */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Reward Description Heading */
-  .reward-description h3 {
-    font-size: 22px;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  /* Reward Description Text */
-  .reward-description p {
+  /* Styling for the button */
+  .loyalty-btn {
+    width: 150px; /* Adjust width as needed */
     font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  /* Redeem Reward Button */
-  .redeem-btn {
-    background-color: #70a9d0; /* Soft light blue for button */
+    background-color: #0a2a3d;
     color: white;
     padding: 12px 0;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    width: 70%;
-    font-size: 14px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    display: block;
-    margin-left: auto;
-    margin-right: auto; /* Centers the button */
+    display: inline-block;
   }
-  
-  .redeem-btn:hover {
-    background-color: #5c92b6; /* Slightly darker blue on hover */
+
+  .item-collection {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  /* Mobile Responsiveness */
-  @media screen and (max-width: 600px) {
-    .loyalty-card {
-      width: 100%;
-      padding: 20px;
-    }
-  
-    .item-collection {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  
-    .redeem-btn {
-      width: 90%;
-    }
+
+  .loyalty-btn {
+    width: 90%;
   }
+}
+
+
+  /* LOADER */
+
+/* loader.component.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100; /* Ensure it's on top */
+  visibility: hidden; /* Hide by default */
+}
+
+.loader-img {
+  width: 60px; /* Set the size of the GIF */
+  height: 60px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the GIF is contained within the circular shape */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1); /* Faded shadow around the loader */
   
-  /* Card Container (Centering the Card on the Page) */
-  .card-container {
-    display: flex;
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
-    height: 100vh; /* Makes the container take up the full height of the viewport */
-  }
-  
+  /* Apply a radial gradient to make the edges more transparent */
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); /* For WebKit browsers */
+}
+
+.overlay.active {
+  visibility: visible;
+}

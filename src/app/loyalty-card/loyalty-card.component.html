@@ -1,26 +1,67 @@
+
+<div ngClass="overlay {{isLoading ? 'active' : ''}}" *ngIf="isLoading">
+  <img src="assets/images/ezgif.com-speed.gif" alt="Loading..." class="loader-img">
+</div>
+
+<!-- Reward Details Modal -->
+<div class="modal" [ngClass]="{ 'show': isModalVisible }">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeModal()">&times;</span>
+    <div>
+      <h2>{{rewardTitle && rewardTitle !== '' ? rewardTitle : 'Redeem Reward'}}</h2>
+      <span *ngIf="rewardMessage && rewardMessage !== ''">{{rewardMessage}}</span>
+    </div>
+    <div class="reward-description">
+      <p><b>{{selectedReward.title | uppercase}}</b></p>
+      <p>{{selectedReward.description}}</p>
+    </div>
+    <button class="loyalty-btn" *ngIf="canRedeem" (click)="redeemReward(selectedReward.id)">{{redeemButton}}</button>
+  </div>
+</div>
+
 <div class="card-container">
-    <div class="loyalty-card">
-      <!-- Card Header -->
-      <div class="card-header">
-        <h2>{{ user?.name ?? '' }}'s Loyalty Card</h2>
-      </div>
-  
-      <!-- Card Type Badge (Platinum/Silver) -->
-      <div class="card-type">{{ user?.card_type ?? 'silver' }}</div>
-  
-      <!-- Logos -->
-      <div class="item-collection">
-        <div *ngFor="let logo of logos; let i = index" class="item">
-          <img [src]="logo === 'credit-logo' ? 'assets/images/rawncafelogo.png' : 'assets/images/LogoRawn.png'" alt="logo">
+  <div class="loyalty-card">
+    <!-- Card Header -->
+    <div class="card-header">
+      <div class="header-top-row">
+        <div class="logo-container">
+          <img class="logo" src="assets/images/rawncafelogo.png" alt="RawnCafe Logo">
+          <img class="logo-text" src="assets/images/Text.png" alt="RawnCafe">
+          <div class="header-title">Loyalty Card</div>
         </div>
       </div>
-  
-      <!-- Reward Description -->
-      <div class="reward-description">
-        <h3>Reward Status</h3>
-        <p>{{ rewardDescription }}</p>
-        <button *ngIf="canRedeem" (click)="redeemReward()" class="redeem-btn">Redeem Reward</button>
+
+      <!-- Bottom Row: Name and Card Number -->
+      <div class="card-info">
+        <p class="name">Name: {{ user?.name ?? 'John Doe' | titlecase }}</p>
+        <p class="card-number">Card Number: {{ user?.card_number ?? '1234 5678 9876' }}</p>
       </div>
     </div>
+
+    <!-- Card Type Badge (Platinum/Silver) -->
+    <div class="card-type">{{ user?.card_type ?? 'silver' }}</div>
+
+    <!-- Logos -->
+    <div class="item-collection">
+      <div *ngFor="let logo of logos; let i = index" class="item">
+        <div 
+          *ngIf="logo.title !== 'credit-logo' && logo.title !== 'default-logo'" 
+          (click)="showRewardDetails(logo, i)">
+          <img src="assets/images/whitecup.png" alt="Reward Image">
+          <span class="reward-logo">{{ logo.title }}</span>
+        </div>
+        <img 
+          *ngIf="logo.title === 'credit-logo' || logo.title === 'default-logo'" 
+          [src]="logo.title === 'credit-logo' ? 'assets/images/stampedcup.png' : 'assets/images/whitecup.png'" 
+          alt="Logo">
+      </div>
+      
+    </div>
   </div>
-  
+
+  <div class="loyalty-btn-container">
+    <button class="loyalty-btn" *ngIf="adminButtonRole.includes(userRole)" (click)="grantPoints()">Grant Points</button>
+  </div>
+</div>
+
+
