@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "http-server ./dist/rawncafe-web",
     "build": "ng build --configuration=$BUILD_ENV",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
