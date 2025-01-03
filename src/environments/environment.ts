@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://rawn-cafe-backend-631bf37fe97e.herokuapp.com' //stage
+  apiUrl: 'http://localhost:3000'
 };
 
 /*
