@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=staging",
+    "build": "ng build --configuration=$BUILD_ENV",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "heroku": "^10.0.0",
     "jwt-decode": "^4.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
