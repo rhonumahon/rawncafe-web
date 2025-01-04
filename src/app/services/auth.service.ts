@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { ROLES } from '../constants/roles.constants';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
