@@ -4,9 +4,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { ROLES } from '../constants/roles.constants';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +14,16 @@ import { ROLES } from '../constants/roles.constants';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-    // Register function to hit the register API
-    register(payload: any): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/users/register`, payload);
-      }
+  // Register function to hit the register API
+  register(payload: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/users/register`, payload);
+  }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/login`, { username, password });
+    return this.http.post(`${environment.apiUrl}/auth/login`, {
+      username,
+      password,
+    });
   }
 
   setToken(token: string): void {
@@ -36,7 +39,8 @@ export class AuthService {
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token); // Decode the token
-        return decodedToken.role;  // Extract the role from the decoded token
+        return decodedToken.role; // Extract the role from the decoded token
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         return null;
       }
