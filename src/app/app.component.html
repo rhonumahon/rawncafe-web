@@ -2,41 +2,40 @@
   <img src="assets/images/ezgif.com-speed.gif" alt="Loading..." class="loader-img">
 </div>
 
-<nav class=" navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container-fluid">
-        <img src="assets/images/rawncafelogo.png" alt="Logo" class="navbar-icon">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text" routerLink="/dashboard">DASHBOARD</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text" routerLink="/menu">MENU</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text" [routerLink]="['/loyalty-card', authId]">MY LOYALTY CARD</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text disabled">GIFT CARDS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text disabled">DIY MY COFFEE</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold hover-text disabled">PROMOS</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <a *ngIf="isAuthenticated" (click)="logout()" class="nav-link fw-bold hover-text">Logout</a>
-        </form>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <img src="assets/images/rawncafelogo.png" alt="Logo" class="navbar-icon">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text" routerLink="/dashboard">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text" routerLink="/menu">MENU</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text" [routerLink]="['/loyalty-card', authId]">MY LOYALTY CARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text disabled">GIFT CARDS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text disabled">DIY MY COFFEE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold hover-text disabled">PROMOS</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <a *ngIf="isAuthenticated" (click)="logout()" class="nav-link fw-bold hover-text">Logout</a>
+      </form>
     </div>
-  </nav>
-
-  <div class="container mt-5">
-
-    <router-outlet></router-outlet>
   </div>
+</nav>
+
+<div class="container mt-5">
+  <router-outlet></router-outlet>
+</div>
