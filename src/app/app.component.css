@@ -1,75 +1,149 @@
-/* Flexbox for Navbar */
-
+/* General Navbar Styles */
 .navbar .container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Ensure space between logo and other navbar items */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between logo and navbar items */
 }
 
-/* Prevent logo from shrinking */
+/* Navbar Logo */
 .navbar-icon {
-    width: auto;    /* Allow logo to keep its aspect ratio */
-    height: 56px;   /* Fixed height to maintain consistency across all screen sizes */
-    margin-right: 10px;
-    border-radius: 50%;   /* Optional: makes the image circular if it's a square */
-    flex-shrink: 0;   /* Prevent the logo from shrinking */
+  width: auto;    /* Maintain aspect ratio */
+  height: 56px;   /* Fixed height for consistency */
+  margin-right: 10px;
+  border-radius: 50%;   /* Circular logo */
+  flex-shrink: 0;   /* Prevent shrinking */
 }
 
+/* Navbar Hover Effects */
 .hover-text {
-    transition: color 0.3s ease !important;
-  }
+  transition: color 0.3s ease, transform 0.2s ease !important;
+}
 
-    .hover-text:hover {
-    color: #0a2a3d !important;
-    transform: scale(1.08);
-    cursor: pointer;
-  }
+.hover-text:hover {
+  color: #0a2a3d !important;
+  transform: scale(1.08);
+  cursor: pointer;
+}
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .navbar .container-fluid {
-        justify-content: flex-start; /* Align navbar items to the left on mobile */
-    }
+  .navbar .container-fluid {
+      justify-content: flex-start; /* Align items to the left */
+  }
 
-    /* Adjust logo size on small screens */
-    .navbar-icon {
-        width: 70px;  /* Set a fixed width on mobile devices */
-        height: auto;  /* Keep the aspect ratio intact */
-        margin-right: 10px;  /* Space between the icon and text */
-    }
+  .navbar-icon {
+      width: 70px;  /* Adjust logo size */
+      height: auto; /* Keep aspect ratio */
+      margin-right: 10px; /* Space between logo and text */
+  }
 }
 
-/* LOADER */
-
-/* loader.component.css */
+/* Loader Overlay */
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensure it's on top */
-    visibility: hidden; /* Hide by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure on top */
+  visibility: hidden; /* Default hidden */
+}
+
+.loader-img {
+  width: 60px; /* GIF size */
+  height: 60px;
+  border-radius: 50%; /* Circular loader */
+  object-fit: cover; /* Contain GIF within circle */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1); /* Shadow */
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+}
+
+.overlay.active {
+  visibility: visible;
+}
+
+/* Footer Styles */
+.footer {
+  padding: 40px 0;
+  background-color: #f8f9fa; /* Light background */
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+  margin-top: 100px;
+}
+
+.footer h5 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0a2a3d;
+  margin-bottom: 15px;
+}
+
+.footer ul {
+  padding: 0;
+  list-style: none;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.footer ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer .bg-dark {
+  background-color: #0a2a3d !important;
+  color: #fff !important;
+}
+
+.footer .bg-dark a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer .bg-dark a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+  .footer .row {
+      text-align: center;
   }
-  
-  .loader-img {
-    width: 60px; /* Set the size of the GIF */
-    height: 60px;
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the GIF is contained within the circular shape */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1); /* Faded shadow around the loader */
-    
-    /* Apply a radial gradient to make the edges more transparent */
-    mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); /* For WebKit browsers */
+
+  .footer .col-lg-4 {
+      margin-bottom: 20px;
   }
-  
-  .overlay.active {
-    visibility: visible;
-  }
-  
-  
+}
+
+/* Optional Utility Classes */
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-lg-start {
+  text-align: left;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}

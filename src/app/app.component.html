@@ -39,3 +39,38 @@
 <div class="container mt-5">
   <router-outlet></router-outlet>
 </div>
+
+<footer class="footer bg-light text-center text-lg-start">
+  <div class="container p-4">
+    <div class="row">
+      <!-- About Section -->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">About Rawn Cafe</h5>
+        <p>
+          Experience the warmth of the finest coffee and a cozy ambiance. At Rawn Cafe, we craft unforgettable moments one cup at a time.
+        </p>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a class="text-dark hover-text disabled" routerLink="/dashboard">Dashboard</a></li>
+          <li><a class="text-dark hover-text disabled" routerLink="/menu">Menu</a></li>
+          <li><a class="text-dark hover-text" [routerLink]="['/loyalty-card', authId]">My Loyalty Card</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Contact Us</h5>
+        <p>Email: rawncafe@gmail.com</p>
+        <p>Phone: +639956341884</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center p-3 bg-dark text-white">
+    © 2025 Rawn Cafe | All Rights Reserved.
+  </div>
+</footer>

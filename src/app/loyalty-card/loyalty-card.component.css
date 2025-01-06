@@ -4,7 +4,7 @@
   flex-direction: column; /* Stack items vertically */
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   position: relative;
@@ -22,8 +22,8 @@
   outline: 2px solid white;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform: translateY(-50px);
-  margin-bottom: 20px; /* Space between the card and button */
+  /* transform: translateY(-50px); */
+  transform: translateY(60px);
 }
 
 
@@ -173,7 +173,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 5px 0; /* Optional: add space around the button */
+  transform: translateY(75px);
 }
 
 /* Styling for the button */
@@ -252,6 +252,10 @@
     align-items: flex-start; /* Align items at the top */
   }
 
+  .card-header {
+    height: 18%;
+  }
+
   .loyalty-card {
     width: 95%; /* Adjust width to fit within smaller screens */
     height: auto; /* Allow height to adjust dynamically */
@@ -259,10 +263,19 @@
   }
   
   /* Styling for the button */
+  .loyalty-btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    transform: translateY(30px); /* Reset translate for mobile */
+    padding-top: 10%;
+  }
+  
+  /* Styling for the button */
   .loyalty-btn {
     width: 150px; /* Adjust width as needed */
     font-size: 16px;
-    background-color: #0a2a3d;
+    background-color: rgb(28, 132, 28);
     color: white;
     padding: 12px 0;
     border: none;
@@ -275,10 +288,6 @@
 
   .item-collection {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .loyalty-btn {
-    width: 90%;
   }
 }
 

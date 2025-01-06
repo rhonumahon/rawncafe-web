@@ -40,18 +40,16 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       const { username, password } = this.loginForm.value;
   
-      setTimeout(() => {
         this.authService.login(username, password).subscribe(
           (response) => {
-          console.log('response :', response);
             this.isLoading = false;
             if (response && response.access_token) {
               // Store the access token in localStorage
               localStorage.setItem('access_token', response.access_token);
               // Navigate to the dashboard after successful login
               this.userRole = this.authService.getUserRole();
-              console.log('this.userRole :', this.userRole);
-              this.router.navigate(['/dashboard']);
+              const userId = this.authService.getUserId()
+              this.router.navigate(['/loyalty-card', userId]);
             } else if (response && response.error) {
               this.errorMessage = response.error;
             }
@@ -63,7 +61,6 @@ export class LoginComponent implements OnInit {
             this.errorMessage = 'Invalid credentials or server error';
           }
         );
-      }, 3000 )
     }
   
 

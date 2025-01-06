@@ -37,39 +37,49 @@ private routeSub: Subscription | null = null;
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole();
-    const currentUserId = this.authService.getUserId()
+    const currentUserId = this.authService.getUserId();
+  
     this.routeSub = this.route.paramMap.subscribe(params => {
-      this.userId = params.get('user_id');
-      if(this.userRole === ROLES.User && this.userId !== currentUserId) {
-        this.router.navigate(['/loyalty-card', currentUserId])
+      this.userId = params.get('user_id') || currentUserId; // Fallback to currentUserId if user_id is not in the params
+  
+      if (this.userRole === ROLES.User && this.userId !== currentUserId) {
+        // Redirect if the user role is "User" and the user_id doesn't match the current user
+        this.router.navigate(['/loyalty-card', currentUserId]);
       }
-      if(this.userId) {
-        this.getUserData(this.userId ?? currentUserId)
+  
+      if (!this.userId) {
+        // Redirect if no user data exists
+        this.router.navigate(['/loyalty-card', currentUserId]);
       }
+  
+      // Fetch user data
+      this.getUserData(this.userId!);
     });
   }
 
 // Method to fetch user data from API
 getUserData(userId: string): void {
+  if(!userId) return;
   this.isLoading = true; // Set loading to true when starting the API call
 
-  this.loyaltyCardService.getUserDetails(userId).subscribe(
-    (data: any) => {
-      this.user = data;
-      this.getRewards(data);
-      this.isLoading = false; // Set loading to false once the API call is successful
-    },
-    error => {
-      console.error('Error fetching user data:', error);
-      this.isLoading = false; // Set loading to false in case of an error as well
-    }
-  );
+  setTimeout(()=>{
+    this.loyaltyCardService.getUserDetails(userId).subscribe(
+      (data: any) => {
+        this.user = data;
+        this.getRewards(data);
+        this.isLoading = false; // Set loading to false once the API call is successful
+      },
+      error => {
+        console.error('Error fetching user data:', error);
+        this.isLoading = false; // Set loading to false in case of an error as well
+      }
+    );
+  }, 2000)
 }
 
 
   // Generate logos based on points
   generateLogos(points: number, rewards: any[]): ILogos[] {
-  console.log('points :', points);
     let logos = [];
     for (let i = 1; i <= 10; i++) {
       const reward = rewards.find(r => r.required_points === i); // Find the reward matching the current point
@@ -118,7 +128,6 @@ getRewards(data: any): void {
   this.loyaltyCardService.getAllRewards().subscribe(
     (response) => {
       this.rewards = response;
-      console.log('User rewards updated:', this.rewards);
       this.logos = this.generateLogos(points, this.rewards);
     },
     (error) => {
