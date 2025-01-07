@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
       this.authId = this.isAuthenticated ? this.authService.getUserId() : '';
+       if(!this.authId) this.router.navigate(['/login']);
     });
   }
 
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.authService.logout();
       this.isLoading = false;
       this.router.navigate(['/login']);
-    }, 3000);
+    }, 1000);
   }
 
   ngOnDestroy() {
