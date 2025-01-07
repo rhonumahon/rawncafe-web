@@ -16,5 +16,38 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
   }
 
+  /* LOADER */
+
+/* loader.component.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+  visibility: hidden; /* Hide by default */
+}
+
+.loader-img {
+  width: 60px; /* Set the size of the GIF */
+  height: 60px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the GIF is contained within the circular shape */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1); /* Faded shadow around the loader */
+  
+  /* Apply a radial gradient to make the edges more transparent */
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); /* For WebKit browsers */
+}
+
+.overlay.active {
+  visibility: visible;
+}
+
 
   

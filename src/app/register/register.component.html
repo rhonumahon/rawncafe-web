@@ -1,3 +1,7 @@
+<div ngClass="overlay {{isSubmitting ? 'active' : ''}}" *ngIf="isSubmitting">
+  <img src="assets/images/ezgif.com-speed.gif" alt="Loading..." class="loader-img">
+</div>
+
 <div class="container px-4">
   <div class="register-card glass">
     <h3 class="text-center fs-5 mb-4">Register</h3>
@@ -56,7 +60,8 @@
       </div>
 
       <div class="mt-4 d-flex justify-content-between align-items-center">
-        <button type="submit" class="btn btn-outline-light" [disabled]="registerForm.invalid">Register</button>
+        <button type="submit" class="btn btn-outline-light" [disabled]="registerForm.invalid" [disabled]="isSubmitting">Register</button>
+
       </div>
 
       <div class="mt-3 text-center login">

@@ -23,6 +23,7 @@ function passwordMatchValidator(control: FormGroup): { [key: string]: boolean } 
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
+  isSubmitting: boolean = false; // Add a flag to track if the form is being submitted
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +47,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(): void {
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid || this.isSubmitting) return; // Check if already submitting
+
+    this.isSubmitting = true; // Set the flag to true to prevent multiple submissions
 
     const { name, contact_number, username, email, password } = this.registerForm.value;
 
@@ -63,9 +66,11 @@ export class RegisterComponent implements OnInit {
       (response) => {
         this.snackBar.open('Registration successful!', 'Close', { duration: 3000 });
         this.router.navigate(['/login']);
+        this.isSubmitting = false; // Reset the flag after successful submission
       },
       (error) => {
         this.snackBar.open('Registration failed, please try again', 'Close', { duration: 3000 });
+        this.isSubmitting = false; // Reset the flag after failure
       }
     );
   }
