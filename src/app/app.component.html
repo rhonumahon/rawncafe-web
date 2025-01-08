@@ -10,8 +10,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li *ngIf="isAuthenticated" class="nav-item">
           <a class="nav-link fw-bold hover-text" routerLink="/dashboard">DASHBOARD</a>
+        </li>
+        <li  *ngIf="isAuthenticated && isAdmin " class="nav-item">
+          <a class="nav-link fw-bold hover-text" [routerLink]="['/manage-users']">MANAGE USERS</a>
         </li>
         <li class="nav-item">
           <a class="nav-link fw-bold hover-text" routerLink="/menu">MENU</a>
@@ -55,7 +58,6 @@
       <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
         <h5 class="text-uppercase">Quick Links</h5>
         <ul class="list-unstyled">
-          <li><a class="text-dark hover-text disabled" routerLink="/dashboard">Dashboard</a></li>
           <li><a class="text-dark hover-text disabled" routerLink="/menu">Menu</a></li>
           <li><a class="text-dark hover-text" [routerLink]="['/loyalty-card', authId]">My Loyalty Card</a></li>
         </ul>

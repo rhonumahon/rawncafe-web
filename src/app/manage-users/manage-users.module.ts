@@ -5,6 +5,7 @@ import { ManageUsersComponent } from './manage-users.component';
 import { RoleGuard } from '../guards/role.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { ROLES } from '../constants/roles.constants';
+import { FormsModule } from '@angular/forms'; 
 
 const routes: Routes = [
   {
@@ -19,7 +20,10 @@ const routes: Routes = [
   declarations: [ManageUsersComponent],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ]
 })
 export class ManageUsersModule { }
+
+

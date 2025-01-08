@@ -29,7 +29,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]

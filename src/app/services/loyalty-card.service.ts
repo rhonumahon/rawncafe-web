@@ -25,4 +25,8 @@ export class LoyaltyCardService {
   addPoints(userId: string): Observable<any> {
     return this.http.post(`${environment.apiUrl}/users/update-points`, { userId})
   }
+    // New method to fetch all users
+    getAllUsers(): Observable<any> {
+      return this.http.get(`${environment.apiUrl}/users`);
+    }
 }

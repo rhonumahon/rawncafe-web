@@ -1,1 +1,51 @@
-<p>manage-users works!</p>
+<div class="container mt-4" style="background-color: white; padding: 20px; border-radius: 8px;">
+    <!-- Page Title -->
+    <h2 class="mb-4 text-left"><b>Manage Users</b></h2>
+  
+    <!-- Filter Dropdown and Search Input -->
+    <div class="mb-4">
+      <label for="filterBySelect" class="form-label">Filter By:</label>
+      <div class="input-group mb-3">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ filterBy | titlecase }}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="filterBy = 'name'">Name</a></li>
+          <li><a class="dropdown-item" (click)="filterBy = 'card_number'">Card Number</a></li>
+        </ul>
+        <input 
+          type="text" 
+          class="form-control" 
+          [(ngModel)]="searchQuery" 
+          placeholder="Type to search"
+          aria-label="Text input with dropdown button">
+      </div>
+    </div>
+  
+    <!-- Table of Users -->
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Card No.</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Expiration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers()">
+          <td>{{ user.card_number }}</td>
+          <td>
+            <button 
+              class="btn btn-link p-0 text-decoration-none" 
+              (click)="goToUsersLoyaltyCard(user.user_id)">
+              {{ user.name | titlecase }}
+            </button>
+          </td>
+          <td>{{ user.is_active ? 'Active' : 'Inactive' }}</td>
+          <td>{{ user.card_expiration_date | date: 'MM/dd/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
