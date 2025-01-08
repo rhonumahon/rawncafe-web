@@ -27,7 +27,8 @@ export class LoyaltyCardComponent implements OnInit, OnDestroy {
   redeemableRewards: string[] = []; // List of rewards user can redeem based on 
   rewardMessage: string = ''
   isModalVisible: boolean = false; // Tracks modal visibility
-  redeemButton: string = 'Redeem Now'
+  redeemButton: string = 'Redeem Now';
+  isGrantPointsModalVisible: boolean = false;
 selectedReward: {id: string, description: string, title: string} = {id: '', description: '',  title: ''}; // Tracks the reward details
 private routeSub: Subscription | null = null;
   
@@ -183,6 +184,22 @@ clearProperties(): void {
   this.rewardTitle =  ''
   this.rewardMessage = ''
   this.canRedeem = false
+}
+
+// Open the modal
+openGrantPointsModal(): void {
+  this.isGrantPointsModalVisible = true;
+}
+
+// Close the modal
+closeGrantPointsModal(): void {
+  this.isGrantPointsModalVisible = false;
+}
+
+// Confirm Grant Points
+confirmGrantPoints(): void {
+  this.closeGrantPointsModal(); // Close the modal before proceeding
+  this.grantPoints(); // Call the grantPoints method
 }
 
 grantPoints(): void {

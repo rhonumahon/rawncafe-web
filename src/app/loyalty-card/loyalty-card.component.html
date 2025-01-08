@@ -19,6 +19,21 @@
   </div>
 </div>
 
+<!-- Grant Points Confirmation Modal -->
+<div class="modal" [ngClass]="{ 'show': isGrantPointsModalVisible }" *ngIf="isGrantPointsModalVisible">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeGrantPointsModal()">&times;</span>
+    <div>
+      <h2>Confirm Grant Points</h2>
+      <p>Are you sure you want to grant points to {{ user?.name || 'this user' | titlecase }}?</p>
+    </div>
+    <div class="modal-actions align-items-center">
+      <button class="btn btn-danger mx-3" (click)="confirmGrantPoints()">Yes, Grant Points</button>
+      <button class="btn btn-secondary mx-3" (click)="closeGrantPointsModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="card-container">
   <div class="loyalty-card">
     <!-- Card Header -->
@@ -36,8 +51,8 @@
         <p class="name">Name: {{ user?.name ?? '' | titlecase }}</p>
         <p class="card-number">Card Number: {{ user?.card_number ?? '' }}</p>
         <div class="card-info-2">
-          <p class="expiration" >Expiration: {{ user.card_expiration_date | date: 'MM/dd/yyyy' }}</p>
-          <p class="points">Points: {{user.points}}</p>
+          <p class="expiration" >Expiration: {{ user?.card_expiration_date | date: 'MM/dd/yyyy' }}</p>
+          <p class="points">Points: {{user?.points}}</p>
         </div>
       </div>
     </div>
@@ -64,8 +79,15 @@
   </div>
 
   <div class="loyalty-btn-container">
-    <button class="loyalty-btn" *ngIf="adminButtonRole.includes(userRole)" (click)="grantPoints()">Grant Points</button>
+    <button 
+      class="loyalty-btn" 
+      *ngIf="adminButtonRole.includes(userRole)" 
+      (click)="openGrantPointsModal()">
+      Grant Points
+    </button>
+
   </div>
+  
 </div>
 
 
