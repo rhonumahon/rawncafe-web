@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';// Adjust path if necessary
 import { LoyaltyCardService } from '../services/loyalty-card.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { ROLES } from '../constants/roles.constants';
 
 @Component({
   selector: 'app-manage-users',
@@ -12,10 +14,15 @@ export class ManageUsersComponent implements OnInit {
   filterBy: string = 'name';   // Default filter is by name
   searchQuery: string = '';    // Variable to store the search query
 
-  constructor(private loyaltyCardService: LoyaltyCardService, private router: Router) {}
+  constructor(private loyaltyCardService: LoyaltyCardService, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.loadUsers();  // Load users when the component initializes
+    const role = this.authService.getUserRole();
+    const userid = this.authService.getUserId();
+    if (role === ROLES.User) {
+      this.router.navigate(['/loyalty-card', userid])
+    }
   }
 
   // Method to load users from the API
