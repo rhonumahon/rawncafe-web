@@ -35,6 +35,10 @@
       <div class="card-info">
         <p class="name">Name: {{ user?.name ?? '' | titlecase }}</p>
         <p class="card-number">Card Number: {{ user?.card_number ?? '' }}</p>
+        <div class="card-info-2">
+          <p class="expiration" >Expiration: {{ user.card_expiration_date | date: 'MM/dd/yyyy' }}</p>
+          <p class="points">Points: {{user.points}}</p>
+        </div>
       </div>
     </div>
 

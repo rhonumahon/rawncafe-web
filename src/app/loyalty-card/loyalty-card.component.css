@@ -91,7 +91,11 @@
   margin-top: 10px;
 }
 
-.card-info p {
+.card-info-2 {
+ transform: translate(200px, -64px);
+}
+
+.card-info .card-info p {
   margin: 0;
   padding: 2px 0;
 }
@@ -253,13 +257,17 @@
   }
 
   .card-header {
-    height: 18%;
+    height: 200px;
   }
 
   .loyalty-card {
     width: 95%; /* Adjust width to fit within smaller screens */
     height: auto; /* Allow height to adjust dynamically */
     transform: translateY(30px); /* Reset translate for mobile */
+  }
+
+  .item-collection {
+    margin-bottom: 50px;
   }
   
   /* Styling for the button */
@@ -285,6 +293,10 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: inline-block;
   }
+
+  .card-info-2 {
+    transform: translate(0px, 0px);
+   }
 
   .item-collection {
     grid-template-columns: repeat(3, 1fr);
